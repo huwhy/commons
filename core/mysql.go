@@ -1,11 +1,11 @@
 package core
 
 import (
+	"git.huwhy.cn/commons/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"huwhy.cn/commons/config"
 )
 
 func NewSQL(conf *config.Mysql) *gorm.DB {

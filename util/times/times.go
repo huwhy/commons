@@ -1,7 +1,7 @@
 package times
 
 import (
-	"huwhy.cn/commons/constant"
+	"git.huwhy.cn/commons/constant"
 	"strconv"
 	"time"
 )
@@ -52,7 +52,7 @@ func NowHour() int64 {
 }
 
 func PlusMonth(t time.Time) time.Time {
-	var v = time.Date(t.Year(), t.Month() + 1, t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), time.Local)
+	var v = time.Date(t.Year(), t.Month()+1, t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), time.Local)
 	return v
 }
 
@@ -62,7 +62,7 @@ func GetMonthStart(t time.Time) time.Time {
 }
 
 func GetMonthEnd(t time.Time) time.Time {
-	var v = time.Date(t.Year(), t.Month() + 1, 1, 23, 59, 59, 0, time.Local)
+	var v = time.Date(t.Year(), t.Month()+1, 1, 23, 59, 59, 0, time.Local)
 	return v.Add(time.Hour * -24)
 }
 

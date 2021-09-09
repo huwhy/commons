@@ -2,7 +2,7 @@ package basemodel
 
 type Page struct {
 	*Term `json:"-"`
-	Total int        `json:"total"`
+	Total int         `json:"total"`
 	Data  interface{} `json:"data"`
 }
 

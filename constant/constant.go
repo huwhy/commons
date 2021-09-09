@@ -10,5 +10,5 @@ const (
 	DateTimeHourNumberFormat = "2006010215"
 	StartTimeOfDay           = " 00:00:00"
 	EndTimeOfDay             = " 23:59:59"
-	HourMinute             = "15:04"
+	HourMinute               = "15:04"
 )

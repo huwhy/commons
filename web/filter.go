@@ -1,11 +1,12 @@
 package web
 
 import (
+	"git.huwhy.cn/commons/basemodel"
 	"github.com/kataras/iris/v12"
 	"go.uber.org/zap"
-	"huwhy.cn/commons/basemodel"
 	"runtime"
 )
+
 func Cors(ctx iris.Context) {
 	ctx.Header("Access-Control-Allow-Origin", "*")
 	if ctx.Request().Method == "OPTIONS" {
@@ -17,8 +18,7 @@ func Cors(ctx iris.Context) {
 	ctx.Next()
 }
 
-
-func ErrorFilter(log *zap.SugaredLogger) func (iris.Context) {
+func ErrorFilter(log *zap.SugaredLogger) func(iris.Context) {
 	return func(context iris.Context) {
 		defer func() {
 			if err := recover(); err != nil {

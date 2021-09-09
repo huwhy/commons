@@ -1,8 +1,8 @@
 package web
 
 import (
+	"git.huwhy.cn/commons/basemodel"
 	"github.com/kataras/iris/v12"
-	"huwhy.cn/commons/basemodel"
 )
 
 type JsonHandler func(ctx iris.Context) *basemodel.Json

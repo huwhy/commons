@@ -1,8 +1,8 @@
 package web
 
 import (
+	"git.huwhy.cn/commons/basemodel"
 	"github.com/kataras/iris/v12"
-	"huwhy.cn/commons/basemodel"
 )
 
 func JsonHandle(fn func(c iris.Context) *basemodel.Json) func(c iris.Context) {
@@ -11,4 +11,3 @@ func JsonHandle(fn func(c iris.Context) *basemodel.Json) func(c iris.Context) {
 		c.JSON(json)
 	}
 }
-

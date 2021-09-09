@@ -2,10 +2,10 @@ package base_dao
 
 import (
 	"fmt"
+	"git.huwhy.cn/commons/basemodel"
+	"git.huwhy.cn/commons/errors"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
-	"huwhy.cn/commons/basemodel"
-	"huwhy.cn/commons/errors"
 )
 
 type BaseDao struct {
@@ -64,7 +64,6 @@ func (dao *BaseDao) List(sql, orderBy string, limit int, args []interface{}, dat
 	return nil
 }
 
-
 func (dao *BaseDao) GetOneById(id int, po interface{}) (bool, error) {
 	rs := dao.DB.Where("id=?", id).First(po)
 	if rs.Error != nil {
@@ -76,7 +75,6 @@ func (dao *BaseDao) GetOneById(id int, po interface{}) (bool, error) {
 	}
 	return true, nil
 }
-
 
 func (dao *BaseDao) GetOneById64(id int64, po interface{}) (bool, error) {
 	rs := dao.DB.Where("id=?", id).First(po)

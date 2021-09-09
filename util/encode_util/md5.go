@@ -1,6 +1,5 @@
 package encode_util
 
-
 import (
 	"crypto/md5"
 	"encoding/hex"
