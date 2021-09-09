@@ -2,8 +2,8 @@ package base_dao
 
 import (
 	"fmt"
-	"git.huwhy.cn/commons/basemodel"
-	"git.huwhy.cn/commons/errors"
+	"git.huwhy.cn/huwhy/commons/basemodel"
+	"git.huwhy.cn/huwhy/commons/errors"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
