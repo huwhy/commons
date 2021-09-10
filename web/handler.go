@@ -1,8 +1,8 @@
 package web
 
 import (
-	"github.com/huwhy/commons/basemodel"
 	"github.com/kataras/iris/v12"
+	"huwhy.cn/commons/basemodel"
 )
 
 func JsonHandle(fn func(c iris.Context) *basemodel.Json) func(c iris.Context) {

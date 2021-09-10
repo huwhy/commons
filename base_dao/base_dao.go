@@ -2,10 +2,10 @@ package base_dao
 
 import (
 	"fmt"
-	"github.com/huwhy/commons/basemodel"
-	"github.com/huwhy/commons/errors"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
+	"huwhy.cn/commons/basemodel"
+	"huwhy.cn/commons/errors"
 )
 
 type BaseDao struct {

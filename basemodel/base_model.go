@@ -1,8 +1,8 @@
 package basemodel
 
 import (
-	"github.com/huwhy/commons/util/datetimes"
 	"gorm.io/gorm"
+	"huwhy.cn/commons/util/datetimes"
 )
 
 type BaseModel struct {

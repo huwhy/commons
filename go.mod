@@ -1,4 +1,4 @@
-module github.com/huwhy/commons
+module huwhy.cn/commons
 
 go 1.16
 

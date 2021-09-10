@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"github.com/fsnotify/fsnotify"
-	"github.com/huwhy/commons/config"
 	"github.com/spf13/viper"
+	"huwhy.cn/commons/config"
 	"path/filepath"
 )
 

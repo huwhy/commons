@@ -1,7 +1,7 @@
 package times
 
 import (
-	"github.com/huwhy/commons/constant"
+	"huwhy.cn/commons/constant"
 	"strconv"
 	"time"
 )
