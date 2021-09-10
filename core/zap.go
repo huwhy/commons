@@ -2,8 +2,8 @@ package core
 
 import (
 	"fmt"
-	"git.huwhy.cn/huwhy/commons/config"
-	"git.huwhy.cn/huwhy/commons/util"
+	"github.com/huwhy/commons/config"
+	"github.com/huwhy/commons/util"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"

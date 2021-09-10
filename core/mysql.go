@@ -1,7 +1,7 @@
 package core
 
 import (
-	"git.huwhy.cn/huwhy/commons/config"
+	"github.com/huwhy/commons/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

@@ -3,8 +3,8 @@ package core
 import (
 	"flag"
 	"fmt"
-	"git.huwhy.cn/huwhy/commons/config"
 	"github.com/fsnotify/fsnotify"
+	"github.com/huwhy/commons/config"
 	"github.com/spf13/viper"
 	"path/filepath"
 )
