@@ -2,7 +2,6 @@ package autocode
 
 import (
 	"gorm.io/gorm"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"text/template"
@@ -48,19 +47,11 @@ func NewModel(dao *gorm.DB, database, table, modelDir, modelPackage string) erro
 		"camel":    camelName,
 		"typeName": typeName,
 	}
-	f, err := os.Open("model.txt")
-	if err != nil {
-		return err
-	}
 	out, err := os.Create(filepath.Join(modelDir, table+".go"))
 	if err != nil {
 		return err
 	}
-	bs, err := ioutil.ReadAll(f)
-	if err != nil {
-		panic(err)
-	}
-	tpl, err := template.New("test").Funcs(funcMap).Parse(string(bs))
+	tpl, err := template.New("test").Funcs(funcMap).Parse(modelTemp)
 	if err != nil {
 		return err
 	}

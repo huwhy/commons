@@ -13,6 +13,13 @@ type BaseDao struct {
 	LOG *zap.SugaredLogger
 }
 
+func NewBaseDao(db *gorm.DB, log *zap.SugaredLogger) BaseDao {
+	return BaseDao{
+		DB:  db,
+		LOG: log,
+	}
+}
+
 func (dao *BaseDao) HandleErr(err error) {
 	if err != nil {
 		panic(errors.NewDaoError(err.Error()))

@@ -1,0 +1,10 @@
+package {{.Package}}
+
+type {{camel .Table true}} struct {
+    {{range .Columns}}{{camel .ColumnName true}} {{typeName .DataType .Length}} `json:"{{camel .ColumnName false}}"`
+    {{end}}
+}
+
+func (m *{{camel .Table true}}) TableName() string {
+	return "{{.Table}}"
+}
