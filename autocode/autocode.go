@@ -30,11 +30,11 @@ func (c *Column) TableName() string {
 	return "COLUMNS"
 }
 
-func NewDatabaseModel(dao *gorm.DB, database, modelDir string) error {
+func NewDatabaseModel(dao *gorm.DB, database, modelDir, modelPackage string) error {
 	tables := listTable(dao, database)
 	if len(tables) > 0 {
 		for _, table := range tables {
-			err := NewModel(dao, database, table, modelDir)
+			err := NewModel(dao, database, table, modelDir, modelPackage)
 			if err != nil {
 				return err
 			}
@@ -43,7 +43,7 @@ func NewDatabaseModel(dao *gorm.DB, database, modelDir string) error {
 	return nil
 }
 
-func NewModel(dao *gorm.DB, database, table, modelDir string) error {
+func NewModel(dao *gorm.DB, database, table, modelDir, modelPackage string) error {
 	funcMap := template.FuncMap{
 		"camel":    camelName,
 		"typeName": typeName,
@@ -68,8 +68,9 @@ func NewModel(dao *gorm.DB, database, table, modelDir string) error {
 	columns := listColumns(dao, database, table)
 	err = tpl.Execute(out, struct {
 		Table   string
+		Package string
 		Columns []Column
-	}{Table: table, Columns: columns})
+	}{Table: table, Package: modelPackage, Columns: columns})
 	if err != nil {
 		return err
 	}

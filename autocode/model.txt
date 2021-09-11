@@ -1,8 +1,7 @@
-package model
+package {{.Package}}
 
 type {{camel .Table true}} struct {
-    {{range .Columns}}
-    {{camel .ColumnName true}} {{typeName .DataType .Length}} `json:"{{camel .ColumnName false}}"`
+    {{range .Columns}}{{camel .ColumnName true}} {{typeName .DataType .Length}} `json:"{{camel .ColumnName false}}"`
     {{end}}
 }
 

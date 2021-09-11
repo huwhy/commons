@@ -39,7 +39,15 @@ func getDao() *gorm.DB {
 }
 
 func TestTemplate(t *testing.T) {
-	err := NewModel(getDao(), "trend", "shares_day_data", ".")
+	err := NewModel(getDao(), "trend", "shares_day_data", ".", "autocode")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log("success")
+}
+
+func TestNewDatabaseModel(t *testing.T) {
+	err := NewDatabaseModel(getDao(), "trend", ".", "autocode")
 	if err != nil {
 		t.Fatal(err)
 	}
