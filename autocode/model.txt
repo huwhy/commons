@@ -1,10 +1,19 @@
-package {{.Package}}
+package model
+
+import (
+    . "github.com/huwhy/commons/basemodel"
+)
 
 type {{camel .Table true}} struct {
+    BaseModel  `gorm:"embedded"`
     {{range .Columns}}{{camel .ColumnName true}} {{typeName .DataType .Length}} `json:"{{camel .ColumnName false}}"`
     {{end}}
 }
 
 func (m *{{camel .Table true}}) TableName() string {
 	return "{{.Table}}"
+}
+
+type {{camel .Table true}}Term struct {
+    *Term
 }

@@ -7,14 +7,14 @@ import (
 
 type BaseModel struct {
 	IsDeleted bool               `json:"-"`
-	Modifier  uint               `json:"modifier"`
+	Modifier  int                `json:"modifier"`
 	Modified  datetimes.DateTime `json:"modified"`
-	Creator   uint               `json:"creator"`
+	Creator   int                `json:"creator"`
 	Created   datetimes.DateTime `json:"created"`
 }
 
 type IDModel struct {
-	ID        uint `json:"id" gorm:"primaryKey"`
+	ID        int `json:"id" gorm:"primaryKey"`
 	BaseModel `gorm:"embedded"`
 }
 

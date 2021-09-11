@@ -1,10 +1,61 @@
-package {{.Package}}
+package dao
 
-type {{camel .Table true}} struct {
-    {{range .Columns}}{{camel .ColumnName true}} {{typeName .DataType .Length}} `json:"{{camel .ColumnName false}}"`
-    {{end}}
+import (
+	"github.com/huwhy/commons/base_dao"
+	. "github.com/huwhy/commons/basemodel"
+	"gorm.io/gorm"
+	"{{.ModPath}}/constant"
+	"{{.ModPath}}/model"
+)
+
+type {{camel .Table true}}Dao struct {
+	base_dao.BaseDao
 }
 
-func (m *{{camel .Table true}}) TableName() string {
-	return "{{.Table}}"
+func New{{camel .Table true}}Dao(db *gorm.DB) *{{camel .Table true}}Dao {
+	{{camel .Table false}}Dao := &{{camel .Table true}}Dao{BaseDao: base_dao.NewBaseDao(db, constant.LOG)}
+	if db == nil {
+		{{camel .Table false}}Dao.DB = constant.DAO
+	}
+	return {{camel .Table false}}Dao
+}
+
+func (dao *{{camel .Table true}}Dao) Add(po *model.{{camel .Table true}}) error {
+	rs := dao.DB.Create(po)
+	return rs.Error
+}
+
+func (dao *{{camel .Table true}}Dao) Delete(id int) error {
+	rs := dao.DB.Exec("update {{.Table}} set is_deleted=1 where id=?", id)
+	return rs.Error
+}
+
+func (dao *{{camel .Table true}}Dao) Update(po *model.{{camel .Table true}}) error {
+	rs := dao.DB.Model(po).Updates(po)
+	return rs.Error
+}
+
+func (dao *{{camel .Table true}}Dao) Get(id int) (*model.{{camel .Table true}}, error) {
+	var po *model.{{camel .Table true}}
+	rs := dao.DB.Where("id=?", id).First(&po)
+	if rs.Error != nil {
+		if rs.Error == gorm.ErrRecordNotFound {
+			return nil, nil
+		} else {
+			return nil, rs.Error
+		}
+	}
+	return po, nil
+}
+
+func (dao *{{camel .Table true}}Dao) Query(term *model.{{camel .Table true}}Term) (*Page, error) {
+	var sql = "select * from {{.Table}} where is_deleted=0"
+	var args = make([]interface{}, 0)
+	var pos = make([]model.{{camel .Table true}}, 0)
+	page := NewPage(term.Term, &pos)
+	err := dao.Paging(page, sql, "", args)
+	if err != nil {
+		return nil, err
+	}
+	return page, nil
 }

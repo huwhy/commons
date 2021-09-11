@@ -1,0 +1,69 @@
+package api
+
+import (
+	. "github.com/huwhy/commons/basemodel"
+	"github.com/kataras/iris/v12"
+	"go.uber.org/zap"
+	"{{.ModPath}}/biz"
+	"{{.ModPath}}/constant"
+	"{{.ModPath}}/model"
+)
+
+type {{camel .Table true}}Api struct {
+	*BaseApi
+}
+
+func (c *{{camel .Table true}}Api) Save(ctx iris.Context) *Json {
+	var {{camel .Table false}} = new(model.{{camel .Table true}})
+	var err error
+	if err = ctx.ReadJSON({{camel .Table false}}); err != nil {
+		return c.HandleErr(err)
+	}
+	if {{camel .Table false}}.ID > 0 {
+		err = biz.New{{camel .Table true}}Biz().Update({{camel .Table false}})
+	} else {
+		err = biz.New{{camel .Table true}}Biz().Add({{camel .Table false}})
+	}
+	if err != nil {
+		return c.HandleErr(err)
+	}
+	return JsonData(user.ID)
+}
+
+func (c *{{camel .Table true}}Api) Delete(ctx iris.Context) *Json {
+	id, err := ctx.Params().GetInt("id")
+	if err != nil {
+		constant.LOG.Error("系统错误", zap.Field{Key: "error", String: err.Error()})
+		return JsonFail("系统异常，请联系客服")
+	}
+	res := biz.New{{camel .Table true}}Biz().Delete(id)
+	return JsonData(res)
+}
+
+func (c *{{camel .Table true}}Api) Get(ctx iris.Context) *Json {
+	id, err := ctx.Params().GetInt("id")
+	if err != nil {
+		constant.LOG.Error("系统错误", zap.Field{Key: "error", String: err.Error()})
+		return JsonFail("系统异常，请联系客服")
+	}
+	if id == 0 {
+		return JsonFail("参数错误")
+	}
+	{{camel .Table false}}, err := biz.New{{camel .Table true}}Biz().Get(id)
+	if err != nil {
+		return JsonFail(err.Error())
+	}
+	return JsonData({{camel .Table false}})
+}
+
+func (c *{{camel .Table true}}Api) List(ctx iris.Context) *Json {
+	var term = new(model.{{camel .Table true}}Term)
+	if err := ctx.ReadJSON(term); err != nil {
+		return JsonFail(err.Error())
+	}
+	{{camel .Table false}}s, err := biz.New{{camel .Table true}}Biz().Query(term)
+	if err != nil {
+		return JsonFail(err.Error())
+	}
+	return JsonData({{camel .Table false}}s)
+}

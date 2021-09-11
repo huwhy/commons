@@ -3,6 +3,7 @@ package autocode
 import (
 	"gorm.io/gorm"
 	"os"
+	"path"
 	"path/filepath"
 	"text/template"
 )
@@ -29,11 +30,11 @@ func (c *Column) TableName() string {
 	return "COLUMNS"
 }
 
-func NewDatabaseModel(dao *gorm.DB, database, modelDir, modelPackage string) error {
+func NewDatabaseModel(dao *gorm.DB, database, baseDir, modPath string) error {
 	tables := listTable(dao, database)
 	if len(tables) > 0 {
 		for _, table := range tables {
-			err := NewModel(dao, database, table, modelDir, modelPackage)
+			err := NewTable(dao, database, table, baseDir, modPath)
 			if err != nil {
 				return err
 			}
@@ -42,16 +43,41 @@ func NewDatabaseModel(dao *gorm.DB, database, modelDir, modelPackage string) err
 	return nil
 }
 
-func NewModel(dao *gorm.DB, database, table, modelDir, modelPackage string) error {
+func NewTable(dao *gorm.DB, database, table, baseDir, modPath string) error {
+	err := NewModel(dao, database, table, baseDir, modPath)
+	if err != nil {
+		return err
+	}
+	err = NewDao(table, baseDir, modPath)
+	if err != nil {
+		return err
+	}
+	err = NewBiz(table, baseDir, modPath)
+	if err != nil {
+		return err
+	}
+	err = NewApi(table, baseDir, modPath)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func NewModel(dao *gorm.DB, database, table, baseDir, modPath string) error {
 	funcMap := template.FuncMap{
 		"camel":    camelName,
 		"typeName": typeName,
 	}
-	out, err := os.Create(filepath.Join(modelDir, table+".go"))
+	filePath := filepath.Join(baseDir, "model", table+".go")
+	err := os.MkdirAll(path.Dir(filePath), os.ModePerm)
 	if err != nil {
 		return err
 	}
-	tpl, err := template.New("test").Funcs(funcMap).Parse(modelTemp)
+	out, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	tpl, err := template.New("model").Funcs(funcMap).Parse(modelTemp)
 	if err != nil {
 		return err
 	}
@@ -59,9 +85,96 @@ func NewModel(dao *gorm.DB, database, table, modelDir, modelPackage string) erro
 	columns := listColumns(dao, database, table)
 	err = tpl.Execute(out, struct {
 		Table   string
-		Package string
+		ModPath string
 		Columns []Column
-	}{Table: table, Package: modelPackage, Columns: columns})
+	}{Table: table, ModPath: modPath, Columns: columns})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func NewDao(table, baseDir, ModPath string) error {
+	funcMap := template.FuncMap{
+		"camel":    camelName,
+		"typeName": typeName,
+	}
+	filePath := filepath.Join(baseDir, "dao", table+"_dao.go")
+	err := os.MkdirAll(path.Dir(filePath), os.ModePerm)
+	if err != nil {
+		return err
+	}
+	out, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	tpl, err := template.New("dao").Funcs(funcMap).Parse(daoTemp)
+	if err != nil {
+		return err
+	}
+	tpl.Funcs(funcMap)
+	err = tpl.Execute(out, struct {
+		Table   string
+		ModPath string
+	}{Table: table, ModPath: ModPath})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func NewBiz(table, baseDir, ModPath string) error {
+	funcMap := template.FuncMap{
+		"camel":    camelName,
+		"typeName": typeName,
+	}
+	filePath := filepath.Join(baseDir, "biz", table+"_biz.go")
+	err := os.MkdirAll(path.Dir(filePath), os.ModePerm)
+	if err != nil {
+		return err
+	}
+	out, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	tpl, err := template.New("dao").Funcs(funcMap).Parse(bizTemp)
+	if err != nil {
+		return err
+	}
+	tpl.Funcs(funcMap)
+	err = tpl.Execute(out, struct {
+		Table   string
+		ModPath string
+	}{Table: table, ModPath: ModPath})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func NewApi(table, baseDir, ModPath string) error {
+	funcMap := template.FuncMap{
+		"camel":    camelName,
+		"typeName": typeName,
+	}
+	filePath := filepath.Join(baseDir, "api", table+"_api.go")
+	err := os.MkdirAll(path.Dir(filePath), os.ModePerm)
+	if err != nil {
+		return err
+	}
+	out, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	tpl, err := template.New("api").Funcs(funcMap).Parse(apiTemp)
+	if err != nil {
+		return err
+	}
+	tpl.Funcs(funcMap)
+	err = tpl.Execute(out, struct {
+		Table   string
+		ModPath string
+	}{Table: table, ModPath: ModPath})
 	if err != nil {
 		return err
 	}

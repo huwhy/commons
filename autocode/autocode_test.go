@@ -4,6 +4,7 @@ import (
 	"github.com/huwhy/commons/config"
 	"github.com/huwhy/commons/core"
 	"gorm.io/gorm"
+	"path/filepath"
 	"testing"
 )
 
@@ -38,16 +39,56 @@ func getDao() *gorm.DB {
 	return core.NewSQL(mysql)
 }
 
-func TestTemplate(t *testing.T) {
-	err := NewModel(getDao(), "trend", "shares_day_data", ".", "autocode")
+func TestModel(t *testing.T) {
+	err := NewModel(getDao(), "trend", "shares_day_data", ".", "huwhy.cn/demo")
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Log("success")
 }
 
+func TestDao(t *testing.T) {
+	baseDir, err := filepath.Abs(".")
+	if err != nil {
+		panic(err)
+	}
+	err = NewDao("member", baseDir, "huwhy.cn/demo")
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestBiz(t *testing.T) {
+	baseDir, err := filepath.Abs(".")
+	if err != nil {
+		panic(err)
+	}
+	err = NewBiz("member", baseDir, "huwhy.cn/demo")
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestApi(t *testing.T) {
+	baseDir, err := filepath.Abs(".")
+	if err != nil {
+		panic(err)
+	}
+	err = NewApi("member", baseDir, "huwhy.cn/demo")
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestNewTable(t *testing.T) {
+	err := NewTable(getDao(), "trend", "shares_day_data", ".", "huwhy.cn/demo")
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestNewDatabaseModel(t *testing.T) {
-	err := NewDatabaseModel(getDao(), "trend", ".", "autocode")
+	err := NewDatabaseModel(getDao(), "trend", ".", "huwhy.cn/demo")
 	if err != nil {
 		t.Fatal(err)
 	}
