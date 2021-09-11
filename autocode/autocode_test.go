@@ -1,8 +1,8 @@
 package autocode
 
 import (
-	"git.huwhy.cn/commons/config"
-	"git.huwhy.cn/commons/core"
+	"github.com/huwhy/commons/config"
+	"github.com/huwhy/commons/core"
 	"gorm.io/gorm"
 	"testing"
 )

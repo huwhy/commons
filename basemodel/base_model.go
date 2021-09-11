@@ -1,7 +1,7 @@
 package basemodel
 
 import (
-	"git.huwhy.cn/commons/util/datetimes"
+	"github.com/huwhy/commons/util/datetimes"
 	"gorm.io/gorm"
 )
 

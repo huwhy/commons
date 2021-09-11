@@ -1,7 +1,7 @@
 package util
 
 import (
-	"git.huwhy.cn/commons/config"
+	"github.com/huwhy/commons/config"
 	zaprotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap/zapcore"
 	"os"
