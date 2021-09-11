@@ -1,9 +1,9 @@
 package web
 
 import (
+	"git.huwhy.cn/commons/basemodel"
 	"github.com/kataras/iris/v12"
 	"go.uber.org/zap"
-	"huwhy.cn/commons/basemodel"
 	"runtime"
 )
 

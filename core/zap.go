@@ -2,11 +2,11 @@ package core
 
 import (
 	"fmt"
+	"git.huwhy.cn/commons/config"
+	"git.huwhy.cn/commons/util"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"huwhy.cn/commons/config"
-	"huwhy.cn/commons/util"
 	"os"
 	"time"
 )

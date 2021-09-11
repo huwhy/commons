@@ -4,8 +4,8 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"huwhy.cn/commons/constant"
-	"huwhy.cn/commons/util/times"
+	"git.huwhy.cn/commons/constant"
+	"git.huwhy.cn/commons/util/times"
 	"time"
 )
 
