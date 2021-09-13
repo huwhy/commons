@@ -21,6 +21,7 @@ func init() {
 	typeMap["bit"] = "bool"
 	typeMap["char"] = "string"
 	typeMap["date"] = "time.Time"
+	typeMap["text"] = "string"
 
 	baseColMap = make(map[string]bool)
 	baseColMap["is_deleted"] = true
