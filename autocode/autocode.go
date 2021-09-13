@@ -9,6 +9,7 @@ import (
 )
 
 var typeMap map[string]string
+var baseColMap map[string]bool
 
 func init() {
 	typeMap = make(map[string]string)
@@ -17,6 +18,14 @@ func init() {
 	typeMap["varchar"] = "string"
 	typeMap["tinyint"] = "int8"
 	typeMap["datetime"] = "time.Time"
+	typeMap["bit"] = "bool"
+
+	baseColMap = make(map[string]bool)
+	baseColMap["is_deleted"] = true
+	baseColMap["modifier"] = true
+	baseColMap["modified"] = true
+	baseColMap["creator"] = true
+	baseColMap["created"] = true
 }
 
 type Column struct {
@@ -83,11 +92,17 @@ func NewModel(dao *gorm.DB, database, table, baseDir, modPath string) error {
 	}
 	tpl.Funcs(funcMap)
 	columns := listColumns(dao, database, table)
+	var cols []Column
+	for _, c := range columns {
+		if ok := baseColMap[c.ColumnName]; !ok {
+			cols = append(cols, c)
+		}
+	}
 	err = tpl.Execute(out, struct {
 		Table   string
 		ModPath string
 		Columns []Column
-	}{Table: table, ModPath: modPath, Columns: columns})
+	}{Table: table, ModPath: modPath, Columns: cols})
 	if err != nil {
 		return err
 	}
