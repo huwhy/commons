@@ -100,6 +100,9 @@ func NewModel(dao *gorm.DB, database, table, baseDir, modPath string) error {
 	var cols []Column
 	for _, c := range columns {
 		if ok := baseColMap[c.ColumnName]; !ok {
+			if c.ColumnName == "Id" {
+				c.ColumnName = "ID"
+			}
 			cols = append(cols, c)
 		}
 	}
