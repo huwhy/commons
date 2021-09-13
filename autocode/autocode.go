@@ -43,9 +43,11 @@ func NewDatabaseModel(dao *gorm.DB, database, baseDir, modPath string) error {
 	tables := listTable(dao, database)
 	if len(tables) > 0 {
 		for _, table := range tables {
-			err := NewTable(dao, database, table, baseDir, modPath)
-			if err != nil {
-				return err
+			if table != "table_name" {
+				err := NewTable(dao, database, table, baseDir, modPath)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
