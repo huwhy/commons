@@ -27,7 +27,7 @@ func (c *{{camel .Table true}}Api) Save(ctx iris.Context) *Json {
 	if err != nil {
 		return c.HandleErr(err)
 	}
-	return JsonData(user.ID)
+	return JsonData({{camel .Table false}}.ID)
 }
 
 func (c *{{camel .Table true}}Api) Delete(ctx iris.Context) *Json {

@@ -22,10 +22,10 @@ func (b *{{camel .Table true}}Biz) Add({{camel .Table false}} *model.{{camel .Ta
 }
 
 func (b *{{camel .Table true}}Biz) Delete(id int) bool {
-	return dao.New{{camel .Table true}}Dao(nil).DeleteInt(id, {{.Table}})
+	return dao.New{{camel .Table true}}Dao(nil).DeleteInt(id, "{{.Table}}")
 }
 
-func (b *{{camel .Table true}}Biz) Update(user *model.{{camel .Table true}}) error {
+func (b *{{camel .Table true}}Biz) Update({{camel .Table false}} *model.{{camel .Table true}}) error {
 	return dao.New{{camel .Table true}}Dao(nil).Update({{camel .Table false}})
 }
 
