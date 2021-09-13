@@ -27,6 +27,7 @@ func init() {
 	baseColMap["is_deleted"] = true
 	baseColMap["modifier"] = true
 	baseColMap["modified"] = true
+	baseColMap["updated"] = true
 	baseColMap["creator"] = true
 	baseColMap["created"] = true
 }
@@ -98,12 +99,12 @@ func NewModel(dao *gorm.DB, database, table, baseDir, modPath string) error {
 	tpl.Funcs(funcMap)
 	columns := listColumns(dao, database, table)
 	var cols []Column
-	for _, c := range columns {
+	for i, c := range columns {
 		if ok := baseColMap[c.ColumnName]; !ok {
-			if c.ColumnName == "Id" {
-				c.ColumnName = "ID"
+			if c.ColumnName == "id" {
+				columns[i].ColumnName = "ID"
 			}
-			cols = append(cols, c)
+			cols = append(cols, columns[i])
 		}
 	}
 	err = tpl.Execute(out, struct {
