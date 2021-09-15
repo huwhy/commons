@@ -4,6 +4,7 @@ type Term struct {
 	Page   int `json:"page"`
 	Size   int `json:"size"`
 	LastId int `json:"lastId"`
+	Total  int `json:"total"`
 }
 
 func (term *Term) GetOffset() int {
@@ -15,4 +16,16 @@ func (term *Term) GetOffset() int {
 		}
 		return (term.Page - 1) * term.Size
 	}
+}
+
+func (term *Term) GetTotalPage() int {
+	var totalPage int = 0
+	if term.Size <= 0 {
+		return 0
+	}
+	if term.Total%term.Size > 0 {
+		totalPage += 1
+	}
+	totalPage += term.Total / term.Size
+	return totalPage
 }

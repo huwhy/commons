@@ -139,10 +139,10 @@ func Count(db *gorm.DB, sql string, args []interface{}) (int, error) {
 	return count, nil
 }
 
-func Paging(db *gorm.DB, page *basemodel.Page, sql, orderBy string, args []interface{}) error {
+func Paging(db *gorm.DB, term *basemodel.Term, sql, orderBy string, args []interface{}, data interface{}) error {
 	var err error
-	if page.LastId == 0 {
-		page.Total, err = Count(db, sql, args)
+	if term.LastId == 0 {
+		term.Total, err = Count(db, sql, args)
 		if err != nil {
 			return err
 		}
@@ -150,8 +150,8 @@ func Paging(db *gorm.DB, page *basemodel.Page, sql, orderBy string, args []inter
 	if orderBy != "" {
 		sql += " order by " + orderBy
 	}
-	sql += fmt.Sprintf(" limit %v, %v", page.GetOffset(), page.Size)
-	rs := db.Raw(sql, args...).Find(page.Data)
+	sql += fmt.Sprintf(" limit %v, %v", term.GetOffset(), term.Size)
+	rs := db.Raw(sql, args...).Find(data)
 	if rs.Error != nil {
 		return rs.Error
 	}

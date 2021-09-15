@@ -48,14 +48,13 @@ func (dao *{{camel .Table true}}Dao) Get(id int) (*model.{{camel .Table true}}, 
 	return po, nil
 }
 
-func (dao *{{camel .Table true}}Dao) Query(term *model.{{camel .Table true}}Term) (*Page, error) {
+func (dao *{{camel .Table true}}Dao) Query(term *model.{{camel .Table true}}Term) ([]model.{{camel .Table true}}, error) {
 	var sql = "select * from {{.Table}} where is_deleted=0"
 	var args = make([]interface{}, 0)
 	var pos = make([]model.{{camel .Table true}}, 0)
-	page := NewPage(term.Term, &pos)
-	err := dao.Paging(page, sql, "", args)
+	err := dao.Paging(page, sql, "", args, &pos)
 	if err != nil {
 		return nil, err
 	}
-	return page, nil
+	return pos, nil
 }
