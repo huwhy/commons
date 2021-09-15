@@ -169,3 +169,16 @@ func List(db *gorm.DB, sql, orderBy string, limit int, args []interface{}, data 
 	}
 	return nil
 }
+
+func InExp(length int) string {
+	inSql := "("
+	for i := 0; i < length; i++ {
+		if i > 0 {
+			inSql += ",?"
+		} else {
+			inSql += "?"
+		}
+	}
+	inSql += ")"
+	return inSql
+}

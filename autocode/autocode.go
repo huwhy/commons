@@ -22,6 +22,7 @@ func init() {
 	typeMap["char"] = "string"
 	typeMap["date"] = "time.Time"
 	typeMap["text"] = "string"
+	typeMap["smallint"] = "int"
 
 	baseColMap = make(map[string]bool)
 	baseColMap["is_deleted"] = true
@@ -30,6 +31,7 @@ func init() {
 	baseColMap["updated"] = true
 	baseColMap["creator"] = true
 	baseColMap["created"] = true
+	baseColMap["deleted"] = true
 }
 
 type Column struct {
