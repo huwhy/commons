@@ -52,7 +52,7 @@ func (dao *{{camel .Table true}}Dao) Query(term *model.{{camel .Table true}}Term
 	var sql = "select * from {{.Table}} where is_deleted=0"
 	var args = make([]interface{}, 0)
 	var pos = make([]model.{{camel .Table true}}, 0)
-	err := dao.Paging(page, sql, "", args, &pos)
+	err := dao.Paging(term, sql, "", args, &pos)
 	if err != nil {
 		return nil, err
 	}
