@@ -37,11 +37,11 @@ func (dao *BaseDao) Count(sql string, args []interface{}) (int, error) {
 	return count, nil
 }
 
-func (dao *BaseDao) Paging(page *basemodel.Page, sql, orderBy string, args []interface{}) error {
+func (dao *BaseDao) Paging(term *basemodel.Term, sql, orderBy string, args []interface{}, data interface{}) error {
 	dao.LOG.Info("dao.paging.paging start", sql, orderBy, args)
 	var err error
-	if page.LastId == 0 {
-		page.Total, err = dao.Count(sql, args)
+	if term.LastId == 0 {
+		term.Total, err = dao.Count(sql, args)
 		if err != nil {
 			return err
 		}
@@ -49,9 +49,9 @@ func (dao *BaseDao) Paging(page *basemodel.Page, sql, orderBy string, args []int
 	if orderBy != "" {
 		sql += " order by " + orderBy
 	}
-	sql += fmt.Sprintf(" limit %v, %v", page.GetOffset(), page.Size)
+	sql += fmt.Sprintf(" limit %v, %v", term.GetOffset(), term.Size)
 	dao.LOG.Info("dao.paging.find start")
-	rs := dao.DB.Raw(sql, args...).Find(page.Data)
+	rs := dao.DB.Raw(sql, args...).Find(data)
 	if rs.Error != nil {
 		return rs.Error
 	}
@@ -127,47 +127,6 @@ func (dao *BaseDao) DeleteInt(id int, table string) bool {
 	rs := dao.DB.Exec("update "+table+" set is_deleted=1 where id=?", id)
 	dao.HandleErr(rs.Error)
 	return rs.RowsAffected > 0
-}
-
-func Count(db *gorm.DB, sql string, args []interface{}) (int, error) {
-	countSql := "select count(1) from (" + sql + ") temp"
-	var count int
-	rs := db.Raw(countSql, args...).Scan(&count)
-	if rs.Error != nil {
-		return 0, rs.Error
-	}
-	return count, nil
-}
-
-func Paging(db *gorm.DB, term *basemodel.Term, sql, orderBy string, args []interface{}, data interface{}) error {
-	var err error
-	if term.LastId == 0 {
-		term.Total, err = Count(db, sql, args)
-		if err != nil {
-			return err
-		}
-	}
-	if orderBy != "" {
-		sql += " order by " + orderBy
-	}
-	sql += fmt.Sprintf(" limit %v, %v", term.GetOffset(), term.Size)
-	rs := db.Raw(sql, args...).Find(data)
-	if rs.Error != nil {
-		return rs.Error
-	}
-	return nil
-}
-
-func List(db *gorm.DB, sql, orderBy string, limit int, args []interface{}, data interface{}) error {
-	if orderBy != "" {
-		sql += " order by " + orderBy
-	}
-	sql += fmt.Sprintf(" limit 0, %d", limit)
-	rs := db.Raw(sql, args...).Find(data)
-	if rs.Error != nil {
-		return rs.Error
-	}
-	return nil
 }
 
 func InExp(length int) string {
