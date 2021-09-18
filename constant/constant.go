@@ -12,3 +12,8 @@ const (
 	EndTimeOfDay             = " 23:59:59"
 	HourMinute               = "15:04"
 )
+
+const (
+	TRACER_ID  = "TRACER_ID"
+	TRACER_CTX = "TRACER_CTX"
+)
