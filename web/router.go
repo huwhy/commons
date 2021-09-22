@@ -22,3 +22,7 @@ func (r *Router) GET(path string, handler JsonHandler) {
 func (r *Router) POST(path string, handler JsonHandler) {
 	r.Post(path, JsonHandle(handler))
 }
+
+func (r *Router) DELETE(path string, handler JsonHandler) {
+	r.Delete(path, JsonHandle(handler))
+}
