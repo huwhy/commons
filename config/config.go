@@ -8,11 +8,12 @@ type IConfig interface {
 }
 
 type Config struct {
-	Server  *Server   `yaml:"server"`
-	Mysql   *Mysql    `yaml:"mysql"`
-	Zap     *Zap      `yaml:"zap"`
-	JWT     *JWT      `yaml:"jwt"`
-	Mp      *MpConfig `yaml:"mp"`
+	Server  *Server     `yaml:"server"`
+	Mysql   *Mysql      `yaml:"mysql"`
+	Zap     *Zap        `yaml:"zap"`
+	JWT     *JWT        `yaml:"jwt"`
+	Mp      *MpConfig   `yaml:"mp"`
+	File    *FileConfig `yaml:"file"`
 	ROOT    string
 	Profile string
 }

@@ -31,5 +31,5 @@ mp:
   aesKey: KMWYukQYu5OEUnGt8ZGwCSNlg9cKL5uwaEqj0wX0QuO
 
 #文件
-file-config:
+file:
   upload: /Users/huwhy/data/upload/
