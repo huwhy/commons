@@ -1,0 +1,35 @@
+server:
+  name: empty
+  port: 8889
+#数据库
+mysql:
+  host: 127.0.0.1
+  username: root
+  password: abc123
+  database: youke
+  params: charset=utf8mb4&parseTime=True&loc=Local
+  maxIdle: 5
+  maxOpen: 5
+#JWT
+jwt:
+  sign: trend
+  expires: 7200
+#ZAP
+zap:
+  dir: ./logs
+  level: debug
+  show_line: true
+  encode_level: LowercaseColorLevelEncoder
+  show_console: true
+  format: json
+
+#小程序配置
+mp:
+  appId: wxc302659d5a21f7dc
+  secret: d6d908ee1d02df13517f6ce04cfdf958
+  token: youkeqing2020
+  aesKey: KMWYukQYu5OEUnGt8ZGwCSNlg9cKL5uwaEqj0wX0QuO
+
+#文件
+file-config:
+  upload: /Users/huwhy/data/upload/

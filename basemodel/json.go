@@ -14,10 +14,10 @@ func JsonOk(message string) *Json {
 	}
 }
 
-func JsonData(date interface{}) *Json {
+func JsonData(data interface{}) *Json {
 	return &Json{
 		Code: 200,
-		Data: date,
+		Data: data,
 	}
 }
 
