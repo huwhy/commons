@@ -17,7 +17,7 @@ func (c *{{camel .Table true}}Api) Save(ctx iris.Context) *Json {
 	var {{camel .Table false}} = new(model.{{camel .Table true}})
 	var err error
 	if err = ctx.ReadJSON({{camel .Table false}}); err != nil {
-		return c.HandleErr(err)
+		return c.HandleErr(ctx, err)
 	}
 	if {{camel .Table false}}.ID > 0 {
 		err = biz.New{{camel .Table true}}Biz().Update({{camel .Table false}})
@@ -25,7 +25,7 @@ func (c *{{camel .Table true}}Api) Save(ctx iris.Context) *Json {
 		err = biz.New{{camel .Table true}}Biz().Add({{camel .Table false}})
 	}
 	if err != nil {
-		return c.HandleErr(err)
+		return c.HandleErr(ctx, err)
 	}
 	return JsonData({{camel .Table false}}.ID)
 }

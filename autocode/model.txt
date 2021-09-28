@@ -14,5 +14,5 @@ func (m *{{camel .Table true}}) TableName() string {
 }
 
 type {{camel .Table true}}Term struct {
-    *Term
+    Term
 }

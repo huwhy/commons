@@ -29,6 +29,6 @@ func (b *{{camel .Table true}}Biz) Update({{camel .Table false}} *model.{{camel 
 	return dao.New{{camel .Table true}}Dao(nil).Update({{camel .Table false}})
 }
 
-func (b *{{camel .Table true}}Biz) Query(term *model.{{camel .Table true}}Term) (*Page, error) {
+func (b *{{camel .Table true}}Biz) Query(term *model.{{camel .Table true}}Term) ([]model.{{camel .Table true}}, error) {
 	return dao.New{{camel .Table true}}Dao(nil).Query(term)
 }
