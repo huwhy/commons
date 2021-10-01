@@ -1,8 +1,8 @@
 package basemodel
 
 type Page struct {
-	*Term `json:"-"`
-	Data  interface{} `json:"data"`
+	*Term
+	Data interface{} `json:"data"`
 }
 
 func NewPage(term *Term, data interface{}) *Page {
