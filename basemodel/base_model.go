@@ -24,6 +24,11 @@ func (s *BaseModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return nil
 }
 
+func (s *BaseModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	s.Modified = datetimes.Now()
+	return nil
+}
+
 func (s *BaseModel) BeforeSave(tx *gorm.DB) (err error) {
 	s.Modified = datetimes.Now()
 	return nil
