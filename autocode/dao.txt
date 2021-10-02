@@ -2,7 +2,6 @@ package dao
 
 import (
 	"github.com/huwhy/commons/base_dao"
-	. "github.com/huwhy/commons/basemodel"
 	"gorm.io/gorm"
 	"{{.ModPath}}/constant"
 	"{{.ModPath}}/model"

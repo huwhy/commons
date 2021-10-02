@@ -1,7 +1,6 @@
 package biz
 
 import (
-	. "github.com/huwhy/commons/basemodel"
 	"{{.ModPath}}/dao"
 	"{{.ModPath}}/model"
 )
