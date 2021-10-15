@@ -129,6 +129,21 @@ func (dao *BaseDao) DeleteInt(id int, table string) bool {
 	return rs.RowsAffected > 0
 }
 
+func (dao *BaseDao) Tx(fn func(db *gorm.DB) error) error {
+	tx := dao.DB.Begin()
+	defer func() {
+		if err := recover(); err != nil {
+			tx.Rollback()
+		}
+	}()
+	if err := fn(tx); err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+}
+
 func InExp(length int) string {
 	inSql := "("
 	for i := 0; i < length; i++ {
