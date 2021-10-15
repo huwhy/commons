@@ -235,6 +235,9 @@ func typeName(str string, length int64) string {
 }
 
 func camelName(str string, firstCap bool) string {
+	if !firstCap && str == "ID" {
+		return "id"
+	}
 	var v string
 	for i, c := range []rune(str) {
 		if c != '_' {

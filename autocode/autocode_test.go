@@ -40,7 +40,7 @@ func getDao() *gorm.DB {
 }
 
 func TestModel(t *testing.T) {
-	err := NewModel(getDao(), "trend", "shares_day_data", ".", "huwhy.cn/demo")
+	err := NewModel(getDao(), "trend", "shares", ".", "huwhy.cn/demo")
 	if err != nil {
 		t.Fatal(err)
 	}

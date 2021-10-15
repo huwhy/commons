@@ -1,10 +1,11 @@
 package basemodel
 
 type Term struct {
-	Page   int `json:"page"`
-	Size   int `json:"size"`
-	LastId int `json:"lastId"`
-	Total  int `json:"total"`
+	Page      int `json:"page"`
+	Size      int `json:"size"`
+	LastId    int `json:"lastId"`
+	Total     int `json:"total"`
+	TotalPage int `json:"totalPage"`
 }
 
 func (term *Term) GetOffset() int {
@@ -19,7 +20,7 @@ func (term *Term) GetOffset() int {
 }
 
 func (term *Term) GetTotalPage() int {
-	var totalPage int = 0
+	var totalPage = 0
 	if term.Size <= 0 {
 		return 0
 	}
