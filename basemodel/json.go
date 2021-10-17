@@ -6,6 +6,14 @@ type Json struct {
 	Data    interface{} `json:"data"`
 }
 
+func JsonSuccess(msg string, data interface{}) *Json {
+	return &Json{
+		Code:    200,
+		Message: msg,
+		Data:    data,
+	}
+}
+
 func JsonOk(message string) *Json {
 	return &Json{
 		Code:    200,
