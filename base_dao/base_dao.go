@@ -40,7 +40,7 @@ func (dao *BaseDao) Count(sql string, args []interface{}) (int, error) {
 func (dao *BaseDao) Paging(term *basemodel.Term, sql, orderBy string, args []interface{}, data interface{}) error {
 	dao.LOG.Info("dao.paging.paging start", sql, orderBy, args)
 	var err error
-	if term.LastId == 0 {
+	if term.LastId == 0 && !term.QueryAll {
 		term.Total, err = dao.Count(sql, args)
 		if err != nil {
 			return err
@@ -49,7 +49,9 @@ func (dao *BaseDao) Paging(term *basemodel.Term, sql, orderBy string, args []int
 	if orderBy != "" {
 		sql += " order by " + orderBy
 	}
-	sql += fmt.Sprintf(" limit %v, %v", term.GetOffset(), term.Size)
+	if !term.QueryAll {
+		sql += fmt.Sprintf(" limit %v, %v", term.GetOffset(), term.Size)
+	}
 	dao.LOG.Info("dao.paging.find start")
 	rs := dao.DB.Raw(sql, args...).Find(data)
 	if rs.Error != nil {

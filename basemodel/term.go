@@ -1,11 +1,12 @@
 package basemodel
 
 type Term struct {
-	Page      int `json:"page"`
-	Size      int `json:"size"`
-	LastId    int `json:"lastId"`
-	Total     int `json:"total"`
-	TotalPage int `json:"totalPage"`
+	Page      int  `json:"page"`
+	Size      int  `json:"size"`
+	LastId    int  `json:"lastId"`
+	Total     int  `json:"total"`
+	TotalPage int  `json:"totalPage"`
+	QueryAll  bool `json:"-"` //查询全部数据
 }
 
 func (term *Term) GetOffset() int {
