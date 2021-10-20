@@ -1,6 +1,7 @@
 package autocode
 
 import (
+	"github.com/huwhy/commons/autocode/model"
 	"github.com/huwhy/commons/config"
 	"github.com/huwhy/commons/core"
 	"gorm.io/gorm"
@@ -93,4 +94,19 @@ func TestNewDatabaseModel(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Log("success")
+}
+
+func TestTestWhereIn(t *testing.T) {
+	sql := "select * from shares where id in ?"
+	var ids []int
+	ids = append(ids, 1, 2, 3)
+	var pos []model.Shares
+	rs := getDao().Raw(sql, ids).Find(&pos)
+	if rs.Error != nil {
+		t.Error(rs.Error)
+	}
+	t.Log(pos)
+
+	getDao().Model(&model.Shares{}).Where("id in ?", ids).Find(&pos)
+	t.Log(pos)
 }

@@ -3,7 +3,6 @@ package web
 import (
 	"github.com/huwhy/commons/basemodel"
 	"github.com/kataras/iris/v12"
-	"github.com/kataras/iris/v12/context"
 )
 
 type JsonHandler func(ctx iris.Context) *basemodel.Json
@@ -18,9 +17,6 @@ func NewRouter(app iris.Party) *Router {
 
 func (r *Router) GET(path string, handler JsonHandler) {
 	r.Get(path, JsonHandle(handler))
-}
-func (r *Router) POSTS(relativePath string, handlers ...context.Handler) {
-	r.Post(relativePath, handlers...)
 }
 func (r *Router) POST(path string, handler JsonHandler) {
 	r.Post(path, JsonHandle(handler))
