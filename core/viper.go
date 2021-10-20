@@ -58,7 +58,6 @@ func LoadConf(conf config.IConfig) *viper.Viper {
 	conf.SetRoot(root)
 	conf.SetEnv(profile)
 	conf.SetRoot(root)
-	conf.SetEnv(profile)
 	v := viper.New()
 	v.SetConfigFile(configPath)
 	err := v.ReadInConfig()

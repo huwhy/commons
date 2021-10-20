@@ -48,3 +48,14 @@ func Test_datetime(t *testing.T) {
 	a := &m
 	t.Log(m, a)
 }
+
+func Test_boolean(t *testing.T) {
+	var s = "{\"status\":null,\"created\":\"2021-10-20 09:19:24\"}"
+	var a = &A{}
+	e := json.Unmarshal([]byte(s), a)
+	if e != nil {
+		t.Error(e)
+	} else {
+		t.Log(a, a.Status)
+	}
+}

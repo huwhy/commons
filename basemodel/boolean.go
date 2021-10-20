@@ -10,7 +10,7 @@ import (
 
 type Boolean int8
 
-const (
+var (
 	True  = Boolean(uint8(1))
 	False = Boolean(uint8(0))
 )
@@ -41,22 +41,37 @@ func (m *Boolean) UnmarshalJSON(data []byte) (err error) {
 
 // Scan 实现 sql.Scanner 接口
 func (m *Boolean) Scan(value interface{}) error {
-	t, ok := value.(uint8)
-	if !ok {
+	switch v := value.(type) {
+	case int64:
+		if v == 1 || v == 0 {
+			*m = Boolean(v)
+		}
+	case []uint8:
+		vv := string(v)
+		vv = strings.ReplaceAll(vv, "\"", "")
+		if vv == "1" || vv == "true" {
+			*m = True
+		} else if vv == "0" || vv == "false" {
+			*m = False
+		}
+	case uint8:
+		if v == 1 || v == 0 {
+			*m = Boolean(v)
+		}
+	default:
 		return errors.New(fmt.Sprint("Failed to uint8 value:", value))
-	}
-	if t == 1 || t == 0 {
-		*m = Boolean(t)
-	} else {
-		return errors.New(fmt.Sprint("Failed to Boolean value:", value))
 	}
 	return nil
 }
 
 // Value 实现 driver.Valuer 接口
 func (m Boolean) Value() (driver.Value, error) {
-	v := uint8(m)
-	return v, nil
+	if m == True {
+		return true, nil
+	} else if m == False {
+		return false, nil
+	}
+	return nil, nil
 }
 
 // String
@@ -67,4 +82,8 @@ func (m Boolean) String() string {
 		return "false"
 	}
 	return "nil"
+}
+
+func (m Boolean) IsTrue() bool {
+	return m == True
 }
