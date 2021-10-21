@@ -10,6 +10,10 @@ import (
 func Now() DateTime {
 	return DateTime(time.Now())
 }
+func Now2() *DateTime {
+	v := DateTime(time.Now())
+	return &v
+}
 
 func ValueOf(t time.Time) DateTime {
 	return DateTime(t)
