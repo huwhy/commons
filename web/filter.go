@@ -22,7 +22,7 @@ func ErrorFilter(log *zap.SugaredLogger) func(iris.Context) {
 	return func(context iris.Context) {
 		defer func() {
 			if err := recover(); err != nil {
-				log.Errorf("err={%+v}, %s", err, GetErrStack())
+				log.Errorf("[%d] err={%+v}, %s", GetWebTraceId(context), err, GetErrStack())
 				context.JSON(basemodel.JsonFail("系统异常，请联系服务人员"))
 			}
 		}()
