@@ -42,6 +42,7 @@ func (dao *BaseDao) Paging(term *basemodel.Term, sql, orderBy string, args []int
 	var err error
 	if term.LastId == 0 && !term.QueryAll {
 		term.Total, err = dao.Count(sql, args)
+		term.TotalPage = term.GetTotalPage()
 		if err != nil {
 			return err
 		}
