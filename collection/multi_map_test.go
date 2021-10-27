@@ -12,4 +12,5 @@ func Test_map(t *testing.T) {
 	m.Add("李四", "32")
 
 	t.Log(m, m.Get("张三"), m.Size(), m.keys())
+	t.Logf("%T", m.Get("张三"))
 }
