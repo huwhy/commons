@@ -4,6 +4,7 @@ import (
 	"github.com/huwhy/commons/base_dao"
 	"gorm.io/gorm"
 	"{{.ModPath}}/constant"
+	"github.com/huwhy/commons/collection"
 	"{{.ModPath}}/model"
 )
 
@@ -30,7 +31,7 @@ func (dao *{{camel .Table true}}Dao) Delete(id int) error {
 }
 
 func (dao *{{camel .Table true}}Dao) Update(po *model.{{camel .Table true}}) error {
-	rs := dao.DB.Model(po).Updates(po)
+	rs := dao.DB.Model(po).Updates(collection.StructToMap(*po))
 	return rs.Error
 }
 
