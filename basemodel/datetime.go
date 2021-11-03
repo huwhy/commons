@@ -59,6 +59,10 @@ func (t *DateTime) WithFormat(format string) string {
 	return (time.Time(*t)).Format(format)
 }
 
+func (t DateTime) ToTime() time.Time {
+	return time.Time(t)
+}
+
 func (t *DateTime) DayOfMonth() int {
 	return (time.Time(*t)).Day()
 }
