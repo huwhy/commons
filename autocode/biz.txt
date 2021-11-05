@@ -12,20 +12,20 @@ func New{{camel .Table true}}Biz() *{{camel .Table true}}Biz {
 	return &{{camel .Table true}}Biz{}
 }
 
-func (b *{{camel .Table true}}Biz) Get(id int) (*model.{{camel .Table true}}, error) {
-	return dao.New{{camel .Table true}}Dao(nil).Get(id)
-}
-
 func (b *{{camel .Table true}}Biz) Add({{camel .Table false}} *model.{{camel .Table true}}) error {
 	return dao.New{{camel .Table true}}Dao(nil).Add({{camel .Table false}})
 }
 
-func (b *{{camel .Table true}}Biz) Delete(id int) bool {
-	return dao.New{{camel .Table true}}Dao(nil).DeleteInt(id, "{{.Table}}")
+func (b *{{camel .Table true}}Biz) Delete(id int) error {
+	return dao.New{{camel .Table true}}Dao(nil).Delete(id)
 }
 
 func (b *{{camel .Table true}}Biz) Update({{camel .Table false}} *model.{{camel .Table true}}) error {
 	return dao.New{{camel .Table true}}Dao(nil).Update({{camel .Table false}})
+}
+
+func (b *{{camel .Table true}}Biz) Get(id int) (*model.{{camel .Table true}}, error) {
+	return dao.New{{camel .Table true}}Dao(nil).Get(id)
 }
 
 func (b *{{camel .Table true}}Biz) Query(term *model.{{camel .Table true}}Term) ([]model.{{camel .Table true}}, error) {
