@@ -1,7 +1,6 @@
 package datetimes
 
 import (
-	. "github.com/huwhy/commons/basemodel"
 	"github.com/huwhy/commons/constant"
 	"github.com/huwhy/commons/util/times"
 	"time"

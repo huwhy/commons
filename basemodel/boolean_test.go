@@ -2,13 +2,14 @@ package basemodel
 
 import (
 	"encoding/json"
+	"github.com/huwhy/commons/util/datetimes"
 	"testing"
 	"time"
 )
 
 type A struct {
-	Status  *Boolean  `json:"status"`
-	Created *DateTime `json:"created"`
+	Status  *Boolean            `json:"status"`
+	Created *datetimes.DateTime `json:"created"`
 }
 
 func Test_boolean_json(t *testing.T) {
@@ -26,7 +27,7 @@ func Test_boolean_json(t *testing.T) {
 		t.Log(string(b))
 	}
 	var a = &A{}
-	dateTime := DateTime(time.Now())
+	dateTime := datetimes.DateTime(time.Now())
 	a.Created = &dateTime
 	b, e = json.Marshal(a)
 	if e != nil {
@@ -44,7 +45,7 @@ func Test_boolean_json(t *testing.T) {
 }
 
 func Test_datetime(t *testing.T) {
-	m := DateTime(time.Now())
+	m := datetimes.DateTime(time.Now())
 	a := &m
 	t.Log(m, a)
 }

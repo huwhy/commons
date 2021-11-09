@@ -1,4 +1,4 @@
-package basemodel
+package datetimes
 
 import (
 	"database/sql/driver"
