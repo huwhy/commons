@@ -20,19 +20,24 @@ type IDModel struct {
 
 func (s *BaseModel) BeforeCreate(tx *gorm.DB) (err error) {
 	if s.Created == nil {
-
+		s.Created = datetimes.Now2()
 	}
-	s.Created = datetimes.Now2()
-	s.Modified = datetimes.Now2()
+	if s.Modified == nil {
+		s.Modified = datetimes.Now2()
+	}
 	return nil
 }
 
 func (s *BaseModel) BeforeUpdate(tx *gorm.DB) (err error) {
-	s.Modified = datetimes.Now2()
+	if s.Modified == nil {
+		s.Modified = datetimes.Now2()
+	}
 	return nil
 }
 
 func (s *BaseModel) BeforeSave(tx *gorm.DB) (err error) {
-	s.Modified = datetimes.Now2()
+	if s.Modified == nil {
+		s.Modified = datetimes.Now2()
+	}
 	return nil
 }
