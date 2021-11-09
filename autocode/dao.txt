@@ -47,6 +47,19 @@ func (dao *{{camel .Table true}}Dao) Get(id int) (*model.{{camel .Table true}}, 
 	return po, nil
 }
 
+func (dao *{{camel .Table true}}Dao) ListByIds(ids []int) ([]model.{{camel .Table true}}, error) {
+	var pos []model.{{camel .Table true}}
+	rs := dao.DB.Where("id in ? and is_deleted=0", ids).Find(&pos)
+	if rs.Error != nil {
+		if rs.Error == gorm.ErrRecordNotFound {
+			return nil, nil
+		} else {
+			return nil, rs.Error
+		}
+	}
+	return pos, nil
+}
+
 func (dao *{{camel .Table true}}Dao) Query(term *model.{{camel .Table true}}Term) ([]model.{{camel .Table true}}, error) {
 	var sql = "select * from {{.Table}} where is_deleted=0"
 	var args = make([]interface{}, 0)
