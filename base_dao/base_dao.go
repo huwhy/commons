@@ -147,6 +147,21 @@ func (dao *BaseDao) Tx(fn func(db *gorm.DB) error) error {
 	return nil
 }
 
+func Tx(db *gorm.DB, fn func(db *gorm.DB) error) error {
+	tx := db.Begin()
+	defer func() {
+		if err := recover(); err != nil {
+			tx.Rollback()
+		}
+	}()
+	if err := fn(tx); err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+}
+
 func InExp(length int) string {
 	inSql := "("
 	for i := 0; i < length; i++ {

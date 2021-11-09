@@ -36,7 +36,7 @@ func (dao *{{camel .Table true}}Dao) Update(po *model.{{camel .Table true}}) err
 
 func (dao *{{camel .Table true}}Dao) Get(id int) (*model.{{camel .Table true}}, error) {
 	var po *model.{{camel .Table true}}
-	rs := dao.DB.Where("id=?", id).First(&po)
+	rs := dao.DB.Where("id=? and is_deleted=0", id).First(&po)
 	if rs.Error != nil {
 		if rs.Error == gorm.ErrRecordNotFound {
 			return nil, nil
