@@ -3,7 +3,7 @@ package core
 import (
 	"fmt"
 	"github.com/huwhy/commons/config"
-	"github.com/huwhy/commons/util"
+	"github.com/huwhy/commons/util/files"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -14,7 +14,7 @@ import (
 var level zapcore.Level
 
 func NewZap(dev bool, conf *config.Zap) *zap.SugaredLogger {
-	if ok, _ := util.PathExists(conf.Dir); !ok {
+	if ok := files.PathExists(conf.Dir); !ok {
 		_ = os.Mkdir(conf.Dir, os.ModePerm)
 	}
 
@@ -137,7 +137,7 @@ func getEncoder(conf *config.Zap) zapcore.Encoder {
 
 // getEncoderCore 获取Encoder的zapcore.Core
 func getEncoderCore(conf *config.Zap) (core zapcore.Core) {
-	writer, err := util.GetWriteSyncer(conf) // 使用file-rotatelogs进行日志分割
+	writer, err := files.GetWriteSyncer(conf) // 使用file-rotatelogs进行日志分割
 	if err != nil {
 		fmt.Printf("Get Write Syncer Failed err:%v", err.Error())
 		return

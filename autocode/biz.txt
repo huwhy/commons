@@ -12,19 +12,31 @@ func New{{camel .Table true}}Biz() *{{camel .Table true}}Biz {
 	return &{{camel .Table true}}Biz{}
 }
 
-func (b *{{camel .Table true}}Biz) Add({{camel .Table false}} *model.{{camel .Table true}}) error {
+func (b *{{camel .Table true}}Biz) Add({{camel .Table false}} *model.{{camel .Table true}}, uid int64) error {
+    {{camel .Table false}}.Creator = uid
 	return dao.New{{camel .Table true}}Dao(nil).Add({{camel .Table false}})
 }
 
-func (b *{{camel .Table true}}Biz) Delete(id int) error {
+func (b *{{camel .Table true}}Biz) Delete(id int64) error {
 	return dao.New{{camel .Table true}}Dao(nil).Delete(id)
 }
 
-func (b *{{camel .Table true}}Biz) Update({{camel .Table false}} *model.{{camel .Table true}}) error {
+func (b *{{camel .Table true}}Biz) Update({{camel .Table false}} *model.{{camel .Table true}}, uid int64) error {
+    {{camel .Table false}}.Modifier = uid
 	return dao.New{{camel .Table true}}Dao(nil).Update({{camel .Table false}})
 }
 
-func (b *{{camel .Table true}}Biz) Get(id int) (*model.{{camel .Table true}}, error) {
+func (b *{{camel .Table true}}Biz) Save({{camel .Table false}} *model.{{camel .Table true}}, uid int64) error {
+	{{camel .Table false}}.Modifier = uid
+	{{camel .Table false}}.Creator = uid
+	if {{camel .Table false}}.ID > 0 {
+		return dao.New{{camel .Table true}}Dao(nil).Update({{camel .Table false}})
+	} else {
+		return dao.New{{camel .Table true}}Dao(nil).Add({{camel .Table false}})
+	}
+}
+
+func (b *{{camel .Table true}}Biz) Get(id int64) (*model.{{camel .Table true}}, error) {
 	return dao.New{{camel .Table true}}Dao(nil).Get(id)
 }
 

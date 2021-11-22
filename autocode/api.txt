@@ -19,11 +19,7 @@ func (c *{{camel .Table true}}Api) Save(ctx iris.Context) *Json {
 	if err = ctx.ReadJSON({{camel .Table false}}); err != nil {
 		return c.HandleErr(ctx, err)
 	}
-	if {{camel .Table false}}.ID > 0 {
-		err = biz.New{{camel .Table true}}Biz().Update({{camel .Table false}})
-	} else {
-		err = biz.New{{camel .Table true}}Biz().Add({{camel .Table false}})
-	}
+	err = biz.New{{camel .Table true}}Biz().Save({{camel .Table false}}, 0)
 	if err != nil {
 		return c.HandleErr(ctx, err)
 	}
@@ -31,7 +27,7 @@ func (c *{{camel .Table true}}Api) Save(ctx iris.Context) *Json {
 }
 
 func (c *{{camel .Table true}}Api) Delete(ctx iris.Context) *Json {
-	id, err := ctx.Params().GetInt("id")
+	id, err := ctx.Params().GetInt64("id")
 	if err != nil {
 		constant.LOG.Error("系统错误", zap.Field{Key: "error", String: err.Error()})
 		return JsonFail("系统异常，请联系客服")
@@ -41,7 +37,7 @@ func (c *{{camel .Table true}}Api) Delete(ctx iris.Context) *Json {
 }
 
 func (c *{{camel .Table true}}Api) Get(ctx iris.Context) *Json {
-	id, err := ctx.Params().GetInt("id")
+	id, err := ctx.Params().GetInt64("id")
 	if err != nil {
 		constant.LOG.Error("系统错误", zap.Field{Key: "error", String: err.Error()})
 		return JsonFail("系统异常，请联系客服")
@@ -65,5 +61,5 @@ func (c *{{camel .Table true}}Api) List(ctx iris.Context) *Json {
 	if err != nil {
 		return JsonFail(err.Error())
 	}
-	return JsonData({{camel .Table false}}s)
+	return JsonData(NewPage(&term.Term, {{camel .Table false}}s))
 }

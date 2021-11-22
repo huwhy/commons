@@ -24,7 +24,7 @@ func (dao *{{camel .Table true}}Dao) Add(po *model.{{camel .Table true}}) error 
 	return rs.Error
 }
 
-func (dao *{{camel .Table true}}Dao) Delete(id int) error {
+func (dao *{{camel .Table true}}Dao) Delete(id int64) error {
 	rs := dao.DB.Exec("update {{.Table}} set is_deleted=1 where id=?", id)
 	return rs.Error
 }
@@ -34,7 +34,7 @@ func (dao *{{camel .Table true}}Dao) Update(po *model.{{camel .Table true}}) err
 	return rs.Error
 }
 
-func (dao *{{camel .Table true}}Dao) Get(id int) (*model.{{camel .Table true}}, error) {
+func (dao *{{camel .Table true}}Dao) Get(id int64) (*model.{{camel .Table true}}, error) {
 	var po *model.{{camel .Table true}}
 	rs := dao.DB.Where("id=? and is_deleted=0", id).First(&po)
 	if rs.Error != nil {
@@ -47,7 +47,7 @@ func (dao *{{camel .Table true}}Dao) Get(id int) (*model.{{camel .Table true}}, 
 	return po, nil
 }
 
-func (dao *{{camel .Table true}}Dao) ListByIds(ids []int) ([]model.{{camel .Table true}}, error) {
+func (dao *{{camel .Table true}}Dao) ListByIds(ids []int64) ([]model.{{camel .Table true}}, error) {
 	var pos []model.{{camel .Table true}}
 	rs := dao.DB.Where("id in ? and is_deleted=0", ids).Find(&pos)
 	if rs.Error != nil {

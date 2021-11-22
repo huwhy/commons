@@ -1,4 +1,4 @@
-package util
+package files
 
 import (
 	"github.com/huwhy/commons/config"
@@ -6,18 +6,19 @@ import (
 	"go.uber.org/zap/zapcore"
 	"os"
 	"path"
+	"strings"
 	"time"
 )
 
-func PathExists(path string) (bool, error) {
+func PathExists(path string) bool {
 	_, err := os.Stat(path)
 	if err == nil {
-		return true, nil
+		return true
 	}
 	if os.IsNotExist(err) {
-		return false, nil
+		return false
 	}
-	return false, err
+	return false
 }
 
 func GetWriteSyncer(conf *config.Zap) (zapcore.WriteSyncer, error) {
@@ -31,4 +32,12 @@ func GetWriteSyncer(conf *config.Zap) (zapcore.WriteSyncer, error) {
 		return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(fileWriter)), err
 	}
 	return zapcore.AddSync(fileWriter), err
+}
+
+func GetSuffix(filename string) string {
+	return filename[strings.LastIndex(filename, "."):]
+}
+
+func MoveFile(src, target string) {
+	os.Rename(src, target)
 }

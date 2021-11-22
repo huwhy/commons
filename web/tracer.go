@@ -12,6 +12,9 @@ func GetWebTraceId(ctx iris.Context) int64 {
 }
 
 func GetTraceId(ctx context.Context) int64 {
+	if ctx == nil {
+		return 0
+	}
 	if v, ok := ctx.Value(constant.TRACER_ID).(int64); ok {
 		return v
 	} else {

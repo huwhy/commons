@@ -6,6 +6,19 @@ import (
 	"time"
 )
 
+func ParseTime(value string) *DateTime {
+	return Parse(value, constant.DateTimeFormat)
+}
+
+func Parse(value, format string) *DateTime {
+	time, err := time.ParseInLocation(format, value, time.Local)
+	if err != nil {
+		panic(err)
+	}
+	v := DateTime(time)
+	return &v
+}
+
 func Now() DateTime {
 	return DateTime(time.Now())
 }
