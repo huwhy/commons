@@ -6,7 +6,7 @@ type Term struct {
 	LastId    int  `json:"lastId"`
 	Total     int  `json:"total"`
 	TotalPage int  `json:"totalPage"`
-	QueryAll  bool `json:"-"` //查询全部数据
+	QueryAll  bool `json:"queryAll"` //查询全部数据
 }
 
 func (term *Term) GetOffset() int {

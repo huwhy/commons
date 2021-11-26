@@ -22,6 +22,7 @@ func NewSQL(conf *config.Mysql) *gorm.DB {
 	if db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{SingularTable: true},
 	}); err != nil {
+		panic(err)
 		return nil
 	} else {
 		sqlDB, _ := db.DB()

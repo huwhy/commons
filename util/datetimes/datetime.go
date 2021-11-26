@@ -23,7 +23,7 @@ func (t DateTime) MarshalJSON() ([]byte, error) {
 
 func (t *DateTime) UnmarshalJSON(data []byte) (err error) {
 	value := string(data)
-	if value != "" {
+	if value != "" && value != "\"\"" {
 		now, err := time.ParseInLocation(`"`+constant.DateTimeFormat+`"`, value, time.Local)
 		*t = DateTime(now)
 		return err
