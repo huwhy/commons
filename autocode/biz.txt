@@ -17,8 +17,8 @@ func (b *{{camel .Table true}}Biz) Add({{camel .Table false}} *model.{{camel .Ta
 	return dao.New{{camel .Table true}}Dao(nil).Add({{camel .Table false}})
 }
 
-func (b *{{camel .Table true}}Biz) Delete(id int64) error {
-	return dao.New{{camel .Table true}}Dao(nil).Delete(id)
+func (b *{{camel .Table true}}Biz) Delete(id, uid int64) error {
+	return dao.New{{camel .Table true}}Dao(nil).Delete(id, uid)
 }
 
 func (b *{{camel .Table true}}Biz) Update({{camel .Table false}} *model.{{camel .Table true}}, uid int64) error {

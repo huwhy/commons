@@ -32,7 +32,7 @@ func (c *{{camel .Table true}}Api) Delete(ctx iris.Context) *Json {
 		constant.LOG.Error("系统错误", zap.Field{Key: "error", String: err.Error()})
 		return JsonFail("系统异常，请联系客服")
 	}
-	err = biz.New{{camel .Table true}}Biz().Delete(id)
+	err = biz.New{{camel .Table true}}Biz().Delete(id, 0)
 	if err != nil {
         return JsonFail(err.Error())
     }

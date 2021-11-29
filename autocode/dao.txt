@@ -24,8 +24,8 @@ func (dao *{{camel .Table true}}Dao) Add(po *model.{{camel .Table true}}) error 
 	return rs.Error
 }
 
-func (dao *{{camel .Table true}}Dao) Delete(id int64) error {
-	rs := dao.DB.Exec("update {{.Table}} set is_deleted=1 where id=?", id)
+func (dao *{{camel .Table true}}Dao) Delete(id, uid int64) error {
+	rs := dao.DB.Exec("update {{.Table}} set is_deleted=1, modified=now(),modifier=? where id=?", id, uid)
 	return rs.Error
 }
 
